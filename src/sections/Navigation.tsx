@@ -1,57 +1,47 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { navLinks, tickerPartners } from "@/data/tournament";
 import { useScrollProgress } from "@/hooks/useGolf";
 
-/** Vertical sponsor carousel: one logo clearly visible for 2s, then a smooth
- *  vertical slide to the next. The first logo is duplicated at the end of the
- *  stack so the loop wraps seamlessly without ever rolling empty. */
+/** Header sponsor rotator — crossfade style: logos sit directly on the navbar,
+ *  one clearly visible at a time (2s hold), swapping with a plain opacity
+ *  crossfade so two briefly overlap and the slot is never empty. Pauses on
+ *  hover; shorter fade under prefers-reduced-motion. */
 function PartnerTicker() {
   const [idx, setIdx] = useState(0);
-  const [animate, setAnimate] = useState(true);
+  const [paused, setPaused] = useState(false);
+  const reduced = useMemo(
+    () => typeof window !== "undefined" && window.matchMedia?.("(prefers-reduced-motion: reduce)").matches,
+    []
+  );
 
   useEffect(() => {
-    const t = setInterval(() => {
-      setAnimate(true);
-      setIdx((i) => i + 1);
-    }, 2000);
+    if (paused) return;
+    const t = setInterval(() => setIdx((i) => (i + 1) % tickerPartners.length), 2000);
     return () => clearInterval(t);
-  }, []);
-
-  // after sliding onto the duplicated first logo, snap back (no animation) to the real one
-  useEffect(() => {
-    if (idx === tickerPartners.length) {
-      const t = setTimeout(() => {
-        setAnimate(false);
-        setIdx(0);
-      }, 750);
-      return () => clearTimeout(t);
-    }
-  }, [idx]);
-
-  const stack = [...tickerPartners, tickerPartners[0]];
+  }, [paused]);
 
   return (
-    <div className="hidden h-10 w-32 shrink-0 overflow-hidden md:block" aria-label="Tour sponsors">
-      <div
-        className="will-change-transform"
-        style={{
-          transform: `translateY(-${idx * 100}%)`,
-          transition: animate ? "transform 700ms ease-in-out" : "none",
-        }}
-      >
-        {stack.map((p, i) => (
-          <div key={`${p.src}-${i}`} className="flex h-10 items-center justify-center">
-            <img
-              src={p.src}
-              alt={p.alt}
-              title={p.alt}
-              loading="lazy"
-              className="max-h-8 w-auto max-w-[122px] object-contain"
-            />
-          </div>
-        ))}
-      </div>
+    <div
+      className="relative hidden h-9 w-32 shrink-0 overflow-hidden md:block"
+      aria-label={`Tour sponsor: ${tickerPartners[idx].alt}`}
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
+      {tickerPartners.map((p, i) => (
+        <img
+          key={p.src}
+          src={p.src}
+          alt={i === idx ? p.alt : ""}
+          title={p.alt}
+          loading="lazy"
+          className="absolute inset-0 m-auto max-h-8 w-auto max-w-[122px] object-contain"
+          style={{
+            opacity: i === idx ? 1 : 0,
+            transition: `opacity ${reduced ? 0.15 : 0.6}s ease-in-out`,
+          }}
+        />
+      ))}
     </div>
   );
 }
