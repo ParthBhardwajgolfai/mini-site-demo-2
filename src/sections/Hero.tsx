@@ -50,7 +50,7 @@ export function Hero() {
         </div>
       </div>
 
-      <div className="relative z-10 mx-auto w-full max-w-[1400px] px-6 pb-16 md:px-10 md:pb-24">
+      <div className="relative z-10 mx-auto w-full max-w-[1400px] px-6 pt-24 pb-16 md:px-10 md:pb-24 lg:pt-0">
         <p className="text-[12px] uppercase tracking-[0.3em] text-white/70" style={{ ...fade(300), textShadow: "0 2px 14px rgba(10,18,13,0.6), 0 4px 40px rgba(10,18,13,0.45)" }}>
           {tournament.sanction}
         </p>
