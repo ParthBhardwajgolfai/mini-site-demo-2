@@ -19,26 +19,26 @@ export function Hero() {
   return (
     <section
       id="top"
-      className="relative flex min-h-[100svh] items-end overflow-hidden lg:h-[min(100svh,56.25vw)] lg:min-h-0"
+      className="relative flex min-h-[100svh] items-end overflow-hidden lg:h-[56.25vw] lg:min-h-0"
       style={{ background: "var(--ink)" }}
     >
-      {/* background image — full photograph always visible (contained, never cropped) */}
+      {/* background image — full-bleed on desktop at the photo's exact aspect ratio,
+          so nothing is cropped, zoomed or stretched; contained poster layout below lg */}
       <div className="absolute inset-0 overflow-hidden">
         <img
           src="/images/hero.jpg"
           alt="Rashid Khan in action during the opening round at Kalhaar Blues & Greens"
-          className="h-full w-full object-contain object-center"
-          style={{ transform: loaded ? "scale(1)" : "scale(1.03)", transition: "transform 2.4s cubic-bezier(0.22,1,0.36,1)" }}
+          className="h-full w-full object-contain object-center lg:object-cover"
         />
         {/* top scrim only, so the fixed header stays readable over the bright boards */}
         <div
           className="absolute inset-x-0 top-0 h-36 md:h-44"
           style={{ background: "linear-gradient(to bottom, rgba(10,18,13,0.85) 0%, rgba(10,18,13,0.45) 50%, rgba(10,18,13,0) 100%)" }}
         />
-        {/* light readability scrim behind the text block at the bottom */}
+        {/* light readability scrim for the dense overlay text on small screens only */}
         <div
-          className="absolute inset-x-0 bottom-0 h-[38%]"
-          style={{ background: "linear-gradient(to top, rgba(10,18,13,0.66) 0%, rgba(10,18,13,0.3) 55%, rgba(10,18,13,0) 100%)" }}
+          className="absolute inset-x-0 bottom-0 h-[38%] lg:hidden"
+          style={{ background: "linear-gradient(to top, rgba(10,18,13,0.6) 0%, rgba(10,18,13,0.28) 55%, rgba(10,18,13,0) 100%)" }}
         />
       </div>
 
@@ -51,32 +51,32 @@ export function Hero() {
       </div>
 
       <div className="relative z-10 mx-auto w-full max-w-[1400px] px-6 pb-16 md:px-10 md:pb-24">
-        <p className="text-[12px] uppercase tracking-[0.3em] text-white/70" style={fade(300)}>
+        <p className="text-[12px] uppercase tracking-[0.3em] text-white/70" style={{ ...fade(300), textShadow: "0 2px 14px rgba(10,18,13,0.6), 0 4px 40px rgba(10,18,13,0.45)" }}>
           {tournament.sanction}
         </p>
 
-        <h1 className="font-display mt-6 max-w-5xl text-[13vw] font-light leading-[0.98] tracking-tight text-white sm:text-7xl md:text-8xl" style={fade(450)}>
+        <h1 className="font-display mt-6 max-w-5xl text-[13vw] font-light leading-[0.98] tracking-tight text-white sm:text-7xl md:text-8xl" style={{ ...fade(450), textShadow: "0 2px 14px rgba(10,18,13,0.6), 0 4px 40px rgba(10,18,13,0.45)" }}>
           {tournament.name}
         </h1>
 
         <div className="mt-8 flex flex-wrap items-center gap-x-10 gap-y-4 text-white/85" style={fade(600)}>
           <div>
-            <p className="text-[10px] uppercase tracking-[0.25em] text-white/50">Dates</p>
-            <p className="font-display mt-1 text-lg italic">{tournament.dates}</p>
+            <p className="text-[10px] uppercase tracking-[0.25em] text-white/50" style={{ textShadow: "0 2px 14px rgba(10,18,13,0.6), 0 4px 40px rgba(10,18,13,0.45)" }}>Dates</p>
+            <p className="font-display mt-1 text-lg italic" style={{ textShadow: "0 2px 14px rgba(10,18,13,0.6), 0 4px 40px rgba(10,18,13,0.45)" }}>{tournament.dates}</p>
           </div>
           <div>
-            <p className="text-[10px] uppercase tracking-[0.25em] text-white/50">Venue</p>
-            <p className="font-display mt-1 text-lg italic">{tournament.venue}</p>
+            <p className="text-[10px] uppercase tracking-[0.25em] text-white/50" style={{ textShadow: "0 2px 14px rgba(10,18,13,0.6), 0 4px 40px rgba(10,18,13,0.45)" }}>Venue</p>
+            <p className="font-display mt-1 text-lg italic" style={{ textShadow: "0 2px 14px rgba(10,18,13,0.6), 0 4px 40px rgba(10,18,13,0.45)" }}>{tournament.venue}</p>
           </div>
           <div>
-            <p className="text-[10px] uppercase tracking-[0.25em] text-white/50">Purse</p>
-            <p className="font-display mt-1 text-lg italic" style={{ color: "var(--gold-soft)" }}>
+            <p className="text-[10px] uppercase tracking-[0.25em] text-white/50" style={{ textShadow: "0 2px 14px rgba(10,18,13,0.6), 0 4px 40px rgba(10,18,13,0.45)" }}>Purse</p>
+            <p className="font-display mt-1 text-lg italic" style={{ color: "var(--gold-soft)", textShadow: "0 2px 14px rgba(10,18,13,0.6), 0 4px 40px rgba(10,18,13,0.45)" }}>
               {tournament.purse}
             </p>
           </div>
           <div>
-            <p className="text-[10px] uppercase tracking-[0.25em] text-white/50">Winning Score</p>
-            <p className="font-display mt-1 text-lg italic" style={{ color: "var(--gold-soft)" }}>
+            <p className="text-[10px] uppercase tracking-[0.25em] text-white/50" style={{ textShadow: "0 2px 14px rgba(10,18,13,0.6), 0 4px 40px rgba(10,18,13,0.45)" }}>Winning Score</p>
+            <p className="font-display mt-1 text-lg italic" style={{ color: "var(--gold-soft)", textShadow: "0 2px 14px rgba(10,18,13,0.6), 0 4px 40px rgba(10,18,13,0.45)" }}>
               {champion.score} · {champion.total}
             </p>
           </div>
@@ -87,8 +87,8 @@ export function Hero() {
             <img src={champion.photo} alt={champion.name} className="h-full w-full object-cover" />
           </div>
           <div>
-            <p className="text-[10px] uppercase tracking-[0.25em] text-white/50">Champion</p>
-            <p className="font-display flex items-center gap-2 text-xl italic text-white">
+            <p className="text-[10px] uppercase tracking-[0.25em] text-white/50" style={{ textShadow: "0 2px 14px rgba(10,18,13,0.6), 0 4px 40px rgba(10,18,13,0.45)" }}>Champion</p>
+            <p className="font-display flex items-center gap-2 text-xl italic text-white" style={{ textShadow: "0 2px 14px rgba(10,18,13,0.6), 0 4px 40px rgba(10,18,13,0.45)" }}>
               {champion.name}
               <Flag code={champion.flag} cc={champion.countryCode} />
             </p>
