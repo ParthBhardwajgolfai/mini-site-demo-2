@@ -1,19 +1,28 @@
 import { venue } from "@/data/tournament";
-import { useReveal, useParallax } from "@/hooks/useGolf";
+import { useReveal } from "@/hooks/useGolf";
 
 export function Venue() {
   const ref = useReveal<HTMLElement>();
-  const parallaxRef = useParallax(0.14);
 
   return (
     <section id="venue" ref={ref} className="scroll-mt-24 pb-24 pt-0 md:pb-36" style={{ background: "var(--ivory-deep)" }}>
-      {/* immersive image */}
-      <div ref={parallaxRef} className="relative h-[70vh] overflow-hidden">
-        <img data-parallax src="/images/venue-aerial.jpg" alt="Aerial view of the course" className="h-full w-full object-cover" />
-        <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(242,238,226,1) 0%, rgba(242,238,226,0) 30%)" }} />
-        <div className="absolute bottom-10 left-1/2 w-full max-w-[1400px] -translate-x-1/2 px-6 md:px-10">
+      {/* immersive image — the complete photograph at its exact aspect, never cropped or zoomed.
+          The title overlays it from sm upward; on phones it flows below so nothing is cramped. */}
+      <div className="relative">
+        <div className="aspect-[16/9] w-full overflow-hidden">
+          <img
+            src="/images/venue-aerial.jpg"
+            alt="On course at Kalhaar Blues & Greens during the opening round"
+            className="h-full w-full object-cover"
+          />
+          <div
+            className="absolute inset-0"
+            style={{ background: "linear-gradient(to top, rgba(242,238,226,1) 0%, rgba(242,238,226,0.55) 14%, rgba(242,238,226,0) 34%)" }}
+          />
+        </div>
+        <div className="relative z-10 mx-auto w-full max-w-[1400px] px-6 pt-6 sm:absolute sm:inset-x-0 sm:bottom-8 sm:px-10 sm:pt-0">
           <p className="eyebrow">The Venue</p>
-          <h2 className="font-display mt-4 max-w-3xl text-5xl font-light leading-[1.02] tracking-tight md:text-7xl" style={{ color: "var(--ink)" }}>
+          <h2 className="font-display mt-4 max-w-3xl text-4xl font-light leading-[1.02] tracking-tight sm:text-5xl md:text-7xl" style={{ color: "var(--ink)" }}>
             {venue.name}
           </h2>
           <p className="font-display mt-3 text-xl italic" style={{ color: "var(--gold)" }}>
