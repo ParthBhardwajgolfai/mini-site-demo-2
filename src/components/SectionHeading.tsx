@@ -1,7 +1,8 @@
 import { useReveal } from "@/hooks/useGolf";
 
 interface Props {
-  index: string;
+  /** Section number within the page — omitted for unnumbered sections. */
+  index?: string;
   eyebrow: string;
   title: string;
   lede?: string;
@@ -13,9 +14,11 @@ export function SectionHeading({ index, eyebrow, title, lede, align = "left" }: 
   return (
     <div ref={ref} className={`mb-14 md:mb-20 ${align === "center" ? "text-center" : ""}`}>
       <div className={`reveal flex items-baseline gap-4 ${align === "center" ? "justify-center" : ""}`}>
-        <span className="font-display text-sm italic" style={{ color: "var(--gold)" }}>
-          {index}
-        </span>
+        {index && (
+          <span className="font-display text-sm italic" style={{ color: "var(--gold)" }}>
+            {index}
+          </span>
+        )}
         <span className="eyebrow">{eyebrow}</span>
       </div>
       <h2

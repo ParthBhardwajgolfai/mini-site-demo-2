@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router";
 import { tournament, champion } from "@/data/tournament";
 import { Flag } from "@/components/Flag";
 
@@ -98,21 +99,21 @@ export function Hero() {
         </div>
 
         <div className="mt-10 flex flex-wrap gap-4" style={fade(750)}>
-          <a
-            href="#leaderboard"
+          <Link
+            to="/leaderboard"
             className="px-8 py-3.5 text-[12px] font-semibold uppercase tracking-[0.2em] transition-colors"
             style={{ background: "var(--ivory)", color: "var(--ink)" }}
             onMouseOver={(e) => (e.currentTarget.style.background = "var(--gold-soft)")}
             onMouseOut={(e) => (e.currentTarget.style.background = "var(--ivory)")}
           >
             View Leaderboard
-          </a>
-          <a
-            href="#overview"
+          </Link>
+          <Link
+            to="/about"
             className="border border-white/40 px-8 py-3.5 text-[12px] font-semibold uppercase tracking-[0.2em] text-white transition-colors hover:bg-white/10"
           >
             The Championship
-          </a>
+          </Link>
         </div>
       </div>
     </section>

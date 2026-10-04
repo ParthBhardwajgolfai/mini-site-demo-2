@@ -10,14 +10,19 @@ const overviewStats = [
   { label: "Total purse (US$)", value: 300000, suffix: "" },
 ];
 
-export function Overview() {
+interface OverviewProps {
+  /** Section number within the page. */
+  index?: string;
+}
+
+export function Overview({ index = "01" }: OverviewProps) {
   const ref = useReveal<HTMLElement>();
   const parallaxRef = useParallax(0.12);
 
   return (
     <section id="overview" ref={ref} className="mx-auto max-w-[1400px] scroll-mt-24 px-6 py-24 md:px-10 md:py-36">
       <SectionHeading
-        index="01"
+        index={index}
         eyebrow="The Championship"
         title="Where the plains of Gujarat meet championship golf"
         lede="The championship returns to Kalhaar Blues & Greens with a US$300,000 purse, a deep international field, and four days of stroke play on the DP World PGTI calendar."

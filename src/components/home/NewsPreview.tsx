@@ -1,27 +1,25 @@
 import { news } from "@/data/tournament";
-import { SectionHeading } from "@/components/SectionHeading";
+import { PreviewHeading } from "@/components/PreviewHeading";
+import { ViewAll } from "@/components/ViewAll";
 import { useReveal } from "@/hooks/useGolf";
 
-interface NewsProps {
-  /** Hide the section heading when the page header already carries it. */
-  showHeading?: boolean;
-}
-
-export function News({ showHeading = true }: NewsProps) {
+/** Homepage news preview — the championship-winning report plus the two
+ *  preceding stories; all coverage lives on /news. */
+export function NewsPreview() {
   const ref = useReveal<HTMLElement>();
   const [featured, ...rest] = news;
+  const side = rest.slice(0, 2);
 
   return (
-    <section id="news" ref={ref} className="scroll-mt-24 py-24 md:py-36" style={{ background: "var(--ivory-deep)" }}>
+    <section ref={ref} className="scroll-mt-24 py-24 md:py-36">
       <div className="mx-auto max-w-[1400px] px-6 md:px-10">
-        {showHeading && (
-          <SectionHeading
-            index="09"
-            eyebrow="Tournament News"
-            title="Stories from the week"
-            lede="Reports from the DP World PGTI media team across all four days of the championship in Ahmedabad."
-          />
-        )}
+        <PreviewHeading
+          eyebrow="Tournament News"
+          title="Stories from the week"
+          lede="Reports from the DP World PGTI media team across all four days of the championship in Ahmedabad."
+          ctaTo="/news"
+          ctaLabel="View All News"
+        />
 
         <div className="grid gap-10 lg:grid-cols-12">
           {/* featured story */}
@@ -41,9 +39,9 @@ export function News({ showHeading = true }: NewsProps) {
             </h3>
           </article>
 
-          {/* rest of the stories */}
+          {/* preceding stories */}
           <div className="lg:col-span-5">
-            {rest.map((n, i) => (
+            {side.map((n, i) => (
               <article key={n.title} className="reveal hairline-b group flex gap-6 py-7 first:pt-0" style={{ "--reveal-delay": `${(i + 1) * 90}ms` } as React.CSSProperties}>
                 <div className="cine-frame h-24 w-32 shrink-0 overflow-hidden md:h-28 md:w-40">
                   <img src={n.image} alt={n.title} loading="lazy" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.06]" />
@@ -58,6 +56,10 @@ export function News({ showHeading = true }: NewsProps) {
                 </div>
               </article>
             ))}
+
+            <div className="reveal pt-8" style={{ "--reveal-delay": "300ms" } as React.CSSProperties}>
+              <ViewAll to="/news">View All News</ViewAll>
+            </div>
           </div>
         </div>
       </div>

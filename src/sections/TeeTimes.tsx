@@ -4,32 +4,50 @@ import { Flag } from "@/components/Flag";
 import { SectionHeading } from "@/components/SectionHeading";
 import { useReveal } from "@/hooks/useGolf";
 
-export function TeeTimes() {
+interface TeeTimesProps {
+  /** Hide the section heading when the page header already carries it. */
+  showHeading?: boolean;
+}
+
+export function TeeTimes({ showHeading = true }: TeeTimesProps) {
   const ref = useReveal<HTMLElement>();
   const rounds = Object.keys(teeTimes);
   const [round, setRound] = useState(rounds[rounds.length - 1]);
   const groups = teeTimes[round];
 
+  const tabsRow = (
+    <div className="reveal flex flex-wrap" style={{ border: "1px solid var(--hairline)" }}>
+      {rounds.map((r) => (
+        <button
+          key={r}
+          onClick={() => setRound(r)}
+          className="px-5 py-2.5 text-[11px] font-semibold uppercase tracking-[0.14em] transition-colors"
+          style={{
+            background: round === r ? "var(--forest)" : "transparent",
+            color: round === r ? "var(--ivory)" : "var(--ink-soft)",
+          }}
+        >
+          {r.split(" · ")[0]}
+        </button>
+      ))}
+    </div>
+  );
+
   return (
     <section id="tee-times" ref={ref} className="mx-auto max-w-[1400px] scroll-mt-24 px-6 py-24 md:px-10 md:py-36">
-      <div className="flex flex-wrap items-end justify-between gap-8">
-        <SectionHeading index="04" eyebrow="The Draw" title="Tee Times" lede="Official starting times and groupings for every round of the championship, as published by the tour." />
-        <div className="reveal mb-14 flex flex-wrap md:mb-20" style={{ border: "1px solid var(--hairline)" }}>
-          {rounds.map((r) => (
-            <button
-              key={r}
-              onClick={() => setRound(r)}
-              className="px-5 py-2.5 text-[11px] font-semibold uppercase tracking-[0.14em] transition-colors"
-              style={{
-                background: round === r ? "var(--forest)" : "transparent",
-                color: round === r ? "var(--ivory)" : "var(--ink-soft)",
-              }}
-            >
-              {r.split(" · ")[0]}
-            </button>
-          ))}
+      {showHeading ? (
+        <div className="flex flex-wrap items-end justify-between gap-8">
+          <SectionHeading index="04" eyebrow="The Draw" title="Tee Times" lede="Official starting times and groupings for every round of the championship, as published by the tour." />
+          {tabsRow}
         </div>
-      </div>
+      ) : (
+        <div className="mb-12 flex flex-wrap items-center justify-between gap-6 md:mb-16">
+          <p className="reveal text-[11px] uppercase tracking-[0.22em]" style={{ color: "var(--ink-faint)" }}>
+            The official draw · choose a round
+          </p>
+          {tabsRow}
+        </div>
+      )}
 
       <p className="reveal -mt-8 mb-10 font-display text-lg italic" style={{ color: "var(--gold)" }}>
         {round} · all times IST

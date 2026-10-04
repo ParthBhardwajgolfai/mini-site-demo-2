@@ -57,7 +57,12 @@ function HoleStrip({ player, round }: { player: string; round: RoundKey }) {
   );
 }
 
-export function Leaderboard() {
+interface LeaderboardProps {
+  /** Hide the section heading when the page header already carries it. */
+  showHeading?: boolean;
+}
+
+export function Leaderboard({ showHeading = true }: LeaderboardProps) {
   const ref = useReveal<HTMLElement>();
   const [tab, setTab] = useState<TabKey>("final");
   const [expanded, setExpanded] = useState<string | null>(null);
@@ -67,30 +72,43 @@ export function Leaderboard() {
     return roundStandings[tab as RoundKey];
   }, [tab]);
 
+  const tabsRow = (
+    <div className={`reveal flex flex-wrap gap-0 ${showHeading ? "mb-14 md:mb-20" : ""}`} style={{ border: "1px solid var(--hairline)" }}>
+      {roundTabs.map((t) => (
+        <button
+          key={t.key}
+          onClick={() => {
+            setTab(t.key);
+            setExpanded(null);
+          }}
+          className="px-5 py-2.5 text-[11px] font-semibold uppercase tracking-[0.18em] transition-colors"
+          style={{
+            background: tab === t.key ? "var(--forest)" : "transparent",
+            color: tab === t.key ? "var(--ivory)" : "var(--ink-soft)",
+          }}
+        >
+          {t.label}
+        </button>
+      ))}
+    </div>
+  );
+
   return (
     <section id="leaderboard" ref={ref} className="scroll-mt-24 py-24 md:py-36" style={{ background: "var(--ivory-deep)" }}>
       <div className="mx-auto max-w-[1400px] px-6 md:px-10">
-        <div className="flex flex-wrap items-end justify-between gap-8">
-          <SectionHeading index="03" eyebrow="Scoring" title="Leaderboard" lede={`${tournament.statusDetail} · Par ${tournament.par} · ${tournament.venue} · ${tournament.yardage.toLocaleString("en-IN")} yards`} />
-          <div className="reveal mb-14 flex flex-wrap gap-0 md:mb-20" style={{ border: "1px solid var(--hairline)" }}>
-            {roundTabs.map((t) => (
-              <button
-                key={t.key}
-                onClick={() => {
-                  setTab(t.key);
-                  setExpanded(null);
-                }}
-                className="px-5 py-2.5 text-[11px] font-semibold uppercase tracking-[0.18em] transition-colors"
-                style={{
-                  background: tab === t.key ? "var(--forest)" : "transparent",
-                  color: tab === t.key ? "var(--ivory)" : "var(--ink-soft)",
-                }}
-              >
-                {t.label}
-              </button>
-            ))}
+        {showHeading ? (
+          <div className="flex flex-wrap items-end justify-between gap-8">
+            <SectionHeading index="03" eyebrow="Scoring" title="Leaderboard" lede={`${tournament.statusDetail} · Par ${tournament.par} · ${tournament.venue} · ${tournament.yardage.toLocaleString("en-IN")} yards`} />
+            {tabsRow}
           </div>
-        </div>
+        ) : (
+          <div className="mb-12 flex flex-wrap items-center justify-between gap-6 md:mb-16">
+            <p className="reveal text-[11px] uppercase tracking-[0.22em]" style={{ color: "var(--ink-faint)" }}>
+              Final · round-by-round standings · tap a row for the scorecard
+            </p>
+            {tabsRow}
+          </div>
+        )}
 
         <div className="overflow-x-auto">
           <table className="w-full min-w-[820px] border-collapse text-left">

@@ -4077,65 +4077,76 @@ export const venue: VenueInfo = {
   ]
 };
 
-export const navLinks = [
-  {
-    "id": "overview",
-    "label": "Overview"
-  },
-  {
-    "id": "course",
-    "label": "Course"
-  },
-  {
-    "id": "leaderboard",
-    "label": "Leaderboard"
-  },
-  {
-    "id": "tee-times",
-    "label": "Draw"
-  },
-  {
-    "id": "field",
-    "label": "Field"
-  },
-  {
-    "id": "results",
-    "label": "Results"
-  },
-  {
-    "id": "prize-money",
-    "label": "Prize Money"
-  },
-  {
-    "id": "gallery",
-    "label": "Gallery"
-  },
-  {
-    "id": "news",
-    "label": "News"
-  },
-  {
-    "id": "venue",
-    "label": "Venue"
-  }
-];
-
 export interface PartnerLogo {
   src: string;
   alt: string;
   compact?: boolean;
+  /** "tour" = tour partner · "partner" = partner only, as published on
+   *  pgtofindia.com/tour-partners. */
+  tier?: "tour" | "partner";
+  /** Official partner category. */
+  category?: string;
+  /** Official website. */
+  url?: string;
+  /** One-paragraph profile from the tour's partner description. */
+  blurb?: string;
+  /** Longer feature copy (title partner only). */
+  profile?: string[];
 }
 
+// Order and categorization follow the official tour page
+// (pgtofindia.com/tour-partners): seven tour partners, then the two
+// partners of the championship (media) only.
 export const partners: PartnerLogo[] = [
-  { src: "/images/partners/partner-01.png", alt: "Enerlyte", compact: true },
-  { src: "/images/partners/partner-02.webp", alt: "HCL", compact: true },
-  { src: "/images/partners/partner-03.png", alt: "Axis Bank", compact: true },
-  { src: "/images/partners/partner-04.webp", alt: "Amul", compact: true },
-  { src: "/images/partners/partner-05.png", alt: "DP World", compact: true },
-  { src: "/images/partners/partner-06.png", alt: "Golf Design India" },
-  { src: "/images/partners/partner-07.png", alt: "GolfPlus Monthly", compact: true },
-  { src: "/images/partners/partner-08.png", alt: "Kalyani" },
-  { src: "/images/partners/partner-09.jpg", alt: "Air India Maharaja Club" },
+  {
+    src: "/images/partners/partner-05.png", alt: "DP World", compact: true, tier: "tour",
+    category: "Tour Partner", url: "https://www.dpworld.com/en",
+    blurb: "Reshaping the future of global trade to improve lives everywhere — operating across six continents with over 125,000 employees, combining global infrastructure and local expertise to deliver seamless supply chain solutions.",
+    profile: [
+      "DP World is reshaping the future of global trade to improve lives everywhere. Operating across six continents with a team of over 125,000 employees, we combine global infrastructure and local expertise to deliver seamless supply chain solutions. From Ports and Terminals to Marine Services, Logistics and Technology, we leverage innovation to create better ways to trade, minimizing disruptions from the factory floor to the customer's door.",
+      "Our global sports partnerships in Golf, Cricket, Formula 1 and Sailing showcase our leadership in supply chain transformation. From delivering SailGP to supporting the ICC T20 Cricket World Cup and The Ryder Cup, DP World simplifies logistics, drives performance and changes what's possible.",
+    ],
+  },
+  {
+    src: "/images/partners/partner-04.webp", alt: "Amul", compact: true, tier: "tour",
+    category: "Tour Partner", url: "https://amul.com/index.php",
+    blurb: "India's largest food brand and the eighth-largest dairy company globally — the household name that helped India emerge as the world's largest milk producer, playing a pivotal role in enhancing the tour's brand presence nationwide.",
+  },
+  {
+    src: "/images/partners/partner-03.png", alt: "Axis Bank", compact: true, tier: "tour",
+    category: "Tour Partner", url: "https://www.axis.bank.in/",
+    blurb: "One of the largest private sector banks in India, offering the entire spectrum of financial services to large and mid-corporates, SMEs, agriculture and retail businesses across more than 6,100 domestic branches.",
+  },
+  {
+    src: "/images/partners/partner-02.webp", alt: "HCL", compact: true, tier: "tour",
+    category: "Tour Partner", url: "https://hcl.com/",
+    blurb: "Founded in 1976 as one of India's original IT garage start-ups and a pioneer of modern computing — today a presence across technology, healthcare and talent management solutions generating annual revenues of over US$14.8 billion.",
+  },
+  {
+    src: "/images/partners/partner-01.png", alt: "Enerlyte", compact: true, tier: "tour",
+    category: "Hydration Partner", url: "https://www.amrutanjan.com/food-beverage.html",
+    blurb: "A hydration and wellness brand from Amrutanjan Healthcare, a trusted Indian company with a legacy spanning over 130 years — keeping golfers refreshed, focused and ready to perform at their best on and off the course.",
+  },
+  {
+    src: "/images/partners/partner-09.jpg", alt: "Air India Maharaja Club", tier: "tour",
+    category: "Tour Partner", url: "https://www.airindia.com/in/en/maharaja-club.html",
+    blurb: "Spearheading a new era of Indian aviation — a story that began in 1932 when JRD Tata piloted the airline's inaugural flight. Today the group operates over 300 aircraft across five continents, committed to being a world-class global airline with an Indian heart.",
+  },
+  {
+    src: "/images/partners/partner-08.png", alt: "Kalyani", tier: "tour",
+    category: "Tour Partner", url: "https://www.bharatforge.com/",
+    blurb: "Bharat Forge, part of the USD 3.5 billion Kalyani Group, is a global leader in high-performance components across sectors such as automotive, railways, defence, aerospace, marine and oil & gas.",
+  },
+  {
+    src: "/images/partners/partner-07.png", alt: "GolfPlus Monthly", compact: true, tier: "partner",
+    category: "Media Partner", url: "https://www.golfplusmonthly.com/",
+    blurb: "India's dedicated golf monthly — the game's stories, in print and online.",
+  },
+  {
+    src: "/images/partners/partner-06.png", alt: "Golf Design India", tier: "partner",
+    category: "Media Partner", url: "https://golfdesignindia.com/",
+    blurb: "The definitive voice of golf course design and development in India.",
+  },
 ];
 
 export const headerPartners: PartnerLogo[] = [

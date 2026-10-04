@@ -4,7 +4,12 @@ import { useReveal } from "@/hooks/useGolf";
 
 const holes = Array.from({ length: 18 }, (_, i) => i + 1);
 
-export function Course() {
+interface CourseProps {
+  /** Section number within the page. */
+  index?: string;
+}
+
+export function Course({ index = "02" }: CourseProps) {
   const ref = useReveal<HTMLElement>();
 
   const cell = (v: number, i: number) => (
@@ -16,7 +21,7 @@ export function Course() {
   return (
     <section id="course" ref={ref} className="mx-auto max-w-[1400px] scroll-mt-24 px-6 py-24 md:px-10 md:py-36">
       <SectionHeading
-        index="02"
+        index={index}
         eyebrow="Course Info"
         title={tournament.venue}
         lede={`The official championship card — par ${courseCard.totalPar}, ${courseCard.totalYards.toLocaleString("en-IN")} yards. The 619-yard 15th is the longest examination; the 174-yard 7th the shortest and sharpest. Water is never far from the greens at Ahmedabad's championship layout.`}

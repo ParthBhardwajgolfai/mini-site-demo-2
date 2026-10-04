@@ -3,18 +3,27 @@ import { Flag } from "@/components/Flag";
 import { SectionHeading } from "@/components/SectionHeading";
 import { useReveal } from "@/hooks/useGolf";
 
-export function Results() {
+interface ResultsProps {
+  /** Section number within the page. */
+  index?: string;
+  /** Hide the section heading when the page header already carries it. */
+  showHeading?: boolean;
+}
+
+export function Results({ index = "06", showHeading = true }: ResultsProps) {
   const ref = useReveal<HTMLElement>();
   const rest = results.slice(1);
 
   return (
     <section id="results" ref={ref} className="mx-auto max-w-[1400px] scroll-mt-24 px-6 py-24 md:px-10 md:py-36">
-      <SectionHeading
-        index="06"
-        eyebrow="Final Standings"
-        title="Results"
-        lede="Official final results following the completion of the fourth round on Sunday 15 March 2026."
-      />
+      {showHeading && (
+        <SectionHeading
+          index={index}
+          eyebrow="Final Standings"
+          title="Results"
+          lede="Official final results following the completion of the fourth round on Sunday 15 March 2026."
+        />
+      )}
 
       {/* champion feature */}
       <div className="reveal mb-20 grid items-center gap-10 border-y py-12 md:grid-cols-12" style={{ borderColor: "var(--hairline)" }}>

@@ -5,16 +5,39 @@ import { useReveal } from "@/hooks/useGolf";
 
 const filters = ["All", "Press Conference", "Round 1", "Round 2", "Round 3"];
 
-export function Gallery() {
+interface GalleryProps {
+  /** Hide the section heading when the page header already carries it. */
+  showHeading?: boolean;
+}
+
+export function Gallery({ showHeading = true }: GalleryProps) {
   const ref = useReveal<HTMLElement>();
   const [filter, setFilter] = useState("All");
   const items = filter === "All" ? gallery : gallery.filter((g) => g.category.includes(filter));
 
   return (
     <section id="gallery" ref={ref} className="mx-auto max-w-[1400px] scroll-mt-24 px-6 py-24 md:px-10 md:py-36">
-      <div className="flex flex-wrap items-end justify-between gap-8">
-        <SectionHeading index="08" eyebrow="Media" title="The week in frames" lede="Press conference, practice and tournament action — the Indorama Ventures Open 2026 as it unfolded in Ahmedabad." />
-        <div className="reveal mb-14 flex flex-wrap gap-6 md:mb-20">
+      {showHeading ? (
+        <div className="flex flex-wrap items-end justify-between gap-8">
+          <SectionHeading index="08" eyebrow="Media" title="The week in frames" lede="Press conference, practice and tournament action — the Indorama Ventures Open 2026 as it unfolded in Ahmedabad." />
+          <div className="reveal mb-14 flex flex-wrap gap-6 md:mb-20">
+            {filters.map((f) => (
+              <button
+                key={f}
+                onClick={() => setFilter(f)}
+                className="pb-1 text-[11px] font-semibold uppercase tracking-[0.2em] transition-all"
+                style={{
+                  color: filter === f ? "var(--forest)" : "var(--ink-faint)",
+                  borderBottom: filter === f ? "1px solid var(--gold)" : "1px solid transparent",
+                }}
+              >
+                {f}
+              </button>
+            ))}
+          </div>
+        </div>
+      ) : (
+        <div className="mb-12 flex flex-wrap gap-6 md:mb-16">
           {filters.map((f) => (
             <button
               key={f}
@@ -29,7 +52,7 @@ export function Gallery() {
             </button>
           ))}
         </div>
-      </div>
+      )}
 
       <div className="masonry md:columns-2 lg:columns-3" key={filter}>
         {items.map((g, i) => (
