@@ -22,23 +22,25 @@ export function Hero() {
       className="relative flex min-h-[100svh] items-end overflow-hidden lg:h-[56.25vw] lg:min-h-0"
       style={{ background: "var(--ink)" }}
     >
-      {/* background image — full-bleed on desktop at the photo's exact aspect ratio,
-          so nothing is cropped, zoomed or stretched; contained poster layout below lg */}
+      {/* background image — full-bleed at every size: on desktop the section
+          matches the photo's 16:9 aspect exactly (no crop, no zoom); on
+          mobile/tablet it covers the full screen, framed on the player */}
       <div className="absolute inset-0 overflow-hidden">
         <img
           src="/images/hero.jpg"
           alt="Rashid Khan in action during the opening round at Kalhaar Blues & Greens"
-          className="h-full w-full object-contain object-center lg:object-cover"
+          className="h-full w-full object-cover object-center"
         />
         {/* top scrim only, so the fixed header stays readable over the bright boards */}
         <div
           className="absolute inset-x-0 top-0 h-36 md:h-44"
           style={{ background: "linear-gradient(to bottom, rgba(10,18,13,0.85) 0%, rgba(10,18,13,0.45) 50%, rgba(10,18,13,0) 100%)" }}
         />
-        {/* light readability scrim for the dense overlay text on small screens only */}
+        {/* small-screen readability: darker behind the title and the info rows,
+            clearer band across the middle where the player is */}
         <div
-          className="absolute inset-x-0 bottom-0 h-[38%] lg:hidden"
-          style={{ background: "linear-gradient(to top, rgba(10,18,13,0.6) 0%, rgba(10,18,13,0.28) 55%, rgba(10,18,13,0) 100%)" }}
+          className="absolute inset-0 lg:hidden"
+          style={{ background: "linear-gradient(to bottom, rgba(10,18,13,0.78) 0%, rgba(10,18,13,0.45) 30%, rgba(10,18,13,0.14) 52%, rgba(10,18,13,0.16) 64%, rgba(10,18,13,0.62) 100%)" }}
         />
       </div>
 
