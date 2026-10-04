@@ -1,0 +1,175 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ivory: #faf8f1;
+  --ivory-deep: #f2eee2;
+  --forest: #1d4531;
+  --forest-deep: #143224;
+  --gold: #b99a55;
+  --gold-soft: #c9b46d;
+  --ink: #171a15;
+  --ink-soft: rgba(23, 26, 21, 0.62);
+  --ink-faint: rgba(23, 26, 21, 0.38);
+  --hairline: rgba(23, 26, 21, 0.12);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background: var(--ivory);
+    color: var(--ink);
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  ::selection {
+    background: var(--forest);
+    color: var(--ivory);
+  }
+}
+
+@layer components {
+  .font-display {
+    font-family: 'Fraunces', Georgia, serif;
+    font-optical-sizing: auto;
+  }
+  .hairline-b {
+    border-bottom: 1px solid var(--hairline);
+  }
+  .hairline-t {
+    border-top: 1px solid var(--hairline);
+  }
+  .eyebrow {
+    @apply text-[11px] font-semibold uppercase;
+    letter-spacing: 0.22em;
+    color: var(--gold);
+  }
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* ── Scroll reveal ─────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ── Cinematic image reveal ────────────────────── */
+.cine-frame {
+  overflow: hidden;
+}
+.cine-frame img {
+  transform: scale(1.12);
+  transition: transform 1.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.cine-frame.is-visible img,
+.is-visible .cine-frame img {
+  transform: scale(1);
+}
+
+/* ── Leaderboard row cascade ───────────────────── */
+.lb-row {
+  transition: opacity 0.25s ease, background-color 0.25s ease;
+}
+.lb-body:hover .lb-row {
+  opacity: 0.35;
+}
+.lb-body:hover .lb-row:hover {
+  opacity: 1;
+  background: rgba(29, 69, 49, 0.045);
+}
+
+@keyframes rowIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.row-in {
+  animation: rowIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(var(--i, 0) * 55ms);
+}
+
+/* ── Live dot ──────────────────────────────────── */
+@keyframes pulseGold {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(185, 154, 85, 0.55);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(185, 154, 85, 0);
+  }
+}
+.live-dot {
+  animation: pulseGold 2s ease-in-out infinite;
+}
+
+/* ── Marquee ───────────────────────────────────── */
+@keyframes marqueeX {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.marquee-track {
+  animation: marqueeX 36s linear infinite;
+}
+
+/* ── Gallery masonry ───────────────────────────── */
+.masonry {
+  column-gap: 1.25rem;
+}
+.masonry > * {
+  break-inside: avoid;
+  margin-bottom: 1.25rem;
+}
+
+/* ── Prize expand ──────────────────────────────── */
+.expandable-body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.expandable-body.open {
+  grid-template-rows: 1fr;
+}
+.expandable-body > div {
+  overflow: hidden;
+}
+
+/* thin scrollbar for horizontal strips */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
